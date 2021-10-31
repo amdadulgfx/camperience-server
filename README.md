@@ -6,11 +6,11 @@ CRUD operation is the main purpose of this server. In the backend Node Js and Ex
 
 ## Functionality
 
-◉ The Server is Connected with MongoDB.
-◉ Recieve data from the client side using POST request.
-◉ Get request to read data from the server.
-◉ Update data from the client side using PUT request.
-◉ Delete data from the client side using DELETE request.
+* The Server is Connected with MongoDB.
+* Recieve data from the client side using POST request.
+* Get request to read data from the server.
+* Update data from the client side using PUT request.
+* Delete data from the client side using DELETE request.
 
 
 
