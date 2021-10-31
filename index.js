@@ -54,9 +54,31 @@ async function run() {
             const form = req.body;
             console.log('hit the post api', form);
             const result = await campRegistrations.insertOne(form);
-            console.log(result);
             res.json(result);
         })
+        //POST API For Services
+        app.post('/services', async (req, res) => {
+            const newCamp = req.body;
+            console.log('hit the post api', newCamp);
+            const result = await campCollection.insertOne(newCamp);
+            res.json(result);
+        })
+
+        // UPDATE API
+        app.put('/registrations/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedUser = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: "Approved"
+                },
+            };
+            const result = await campRegistrations.updateOne(filter, updateDoc, options)
+            res.json(result);
+        })
+
         //DELETE API 
         app.delete('/registrations/:id', async (req, res) => {
             const id = req.params.id;
