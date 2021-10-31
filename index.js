@@ -23,12 +23,12 @@ async function run() {
         const campCollection = database.collection("services");
         const campRegistrations = database.collection('registrations')
         //GET API FOR CAMPS
-        app.get('/services', async (req, res) => {
+        app.get('/camps', async (req, res) => {
             const cursor = campCollection.find({});
-            const services = await cursor.toArray();
-            res.send(services);
+            const camps = await cursor.toArray();
+            res.send(camps);
         })
-        app.get('/services/:id', async (req, res) => {
+        app.get('/camps/:id', async (req, res) => {
             const id = req.params.id;
             // console.log('getting specific id', id);
             const query = { _id: ObjectId(id) }
@@ -57,7 +57,7 @@ async function run() {
             res.json(result);
         })
         //POST API For Services
-        app.post('/services', async (req, res) => {
+        app.post('/camps', async (req, res) => {
             const newCamp = req.body;
             console.log('hit the post api', newCamp);
             const result = await campCollection.insertOne(newCamp);
