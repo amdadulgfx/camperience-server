@@ -21,8 +21,8 @@ async function run() {
         await client.connect();
         const database = client.db("campDB");
         const campCollection = database.collection("services");
-
-        //GET API 
+        const campRegistrations = database.collection('registrations')
+        //GET API FOR CAMPS
         app.get('/services', async (req, res) => {
             const cursor = campCollection.find({});
             const services = await cursor.toArray();
@@ -30,11 +30,41 @@ async function run() {
         })
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
-            console.log('getting specific id', id);
+            // console.log('getting specific id', id);
             const query = { _id: ObjectId(id) }
             const service = await campCollection.findOne(query);
             res.json(service);
         })
+        //For Camp Registered user
+        app.get('/registrations', async (req, res) => {
+            const cursor = campRegistrations.find({});
+            const forms = await cursor.toArray();
+            res.send(forms);
+        })
+        app.get('/registrations/:id', async (req, res) => {
+            const id = req.params.id;
+            // console.log('getting specific id', id);
+            const query = { _id: ObjectId(id) }
+            const camp = await campRegistrations.findOne(query);
+            res.json(camp);
+        })
+
+        //POST API For Registrations
+        app.post('/registrations', async (req, res) => {
+            const form = req.body;
+            console.log('hit the post api', form);
+            const result = await campRegistrations.insertOne(form);
+            console.log(result);
+            res.json(result);
+        })
+        //DELETE API 
+        app.delete('/registrations/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await campRegistrations.deleteOne(query);
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close();
